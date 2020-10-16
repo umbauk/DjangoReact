@@ -1,0 +1,23 @@
+lib
+bin
+include
+
+.env
+env
+
+pyenv.cfg
+
+# Python #
+*.py[cod]
+*$py.class
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Backup files #
+*.bak
