@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeProvider, makeStyles } from "@material-ui/core";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-function App() {
+import withAuthentication from "Components/Session/withAuthentication";
+import { theme } from "Components/Styles/theme";
+import LandingPage from "Views/Landing/Landing";
+import Home from "Views/Home/Home";
+
+const useStyles = makeStyles({
+  "@global": {
+    html: {
+      margin: 0,
+      width: "100%",
+      height: "100%",
+      padding: 0,
+      overflowX: "hidden",
+    },
+    body: {
+      margin: 0,
+      width: "100%",
+      height: "100%",
+      padding: 0,
+      overflowX: "hidden",
+    },
+  },
+});
+
+const App = () => {
+  useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path={["/login", "/register"]} component={LandingPage} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   );
-}
+};
 
-export default App;
+export default withAuthentication(App);
