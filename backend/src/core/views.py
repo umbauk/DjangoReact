@@ -16,9 +16,11 @@ class UserRegistrationView(CreateAPIView):
         serializer.save()
         status_code = status.HTTP_201_CREATED
         response = {
-            'success' : 'True',
-            'status code' : status_code,
+            'success': 'True',
+            'status code': status_code,
             'message': 'User registered  successfully',
+            'token': serializer.data['token'],
+            'user': serializer.data['id'],
         }
 
         return Response(response, status=status_code)

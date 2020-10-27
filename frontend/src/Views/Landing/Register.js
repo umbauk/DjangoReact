@@ -50,7 +50,8 @@ const Register = () => {
         context.setCurrentUser(response.data.user);
       }
     } catch (error) {
-      setErrors({ ...error.response.data.errors[0] });
+      if (error?.response?.data?.errors)
+        setErrors({ ...error.response.data.errors[0] });
     }
   };
 

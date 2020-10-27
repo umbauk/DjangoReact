@@ -4,16 +4,20 @@
 
 import axios from "axios";
 
-const register = (fields) => {
-  return axios.post("/api/users/register", fields);
+const register = async (fields) => {
+  fields = {
+    first_name: fields.firstName,
+    last_name: fields.lastName,
+    email: fields.email,
+    password: fields.password
+  }
+  const res = await axios.post("/api/users/register", fields);
+  console.log(res)
+  // return res
 };
 
 const login = async (fields) => {
-  fields = {
-    username: fields.email,
-    password: fields.password
-  }
-  const res = await axios.post("/api/login/", fields)
+  const res = await axios.post("/api/users/login/", fields)
   console.log(res)
   localStorage.setItem('token', res.data.access)
   return res
