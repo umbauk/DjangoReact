@@ -29,9 +29,7 @@ INSTALLED_APPS = [
     'psycopg2',
     'corsheaders',
 
-    'core.apps.CoreConfig',
-    'profile'
-
+    'user.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -99,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'user.User'
 
 
 # Internationalization

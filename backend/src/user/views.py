@@ -1,9 +1,10 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from .serializers import UserRegistrationSerializer, UserLoginSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from .serializers import UserRegistrationSerializer, UserLoginSerializer
+from .models import User
 
 class UserRegistrationView(CreateAPIView):
 
@@ -44,6 +45,33 @@ class UserLoginView(RetrieveAPIView):
         }
         status_code = status.HTTP_200_OK
 
+        return Response(response, status=status_code)
+
+
+class UserView(RetrieveAPIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        try:
+            user = User.objects.get(id=request.user.id)
+            status_code = status.HTTP_200_OK
+            response = {
+                'success': True,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'id': user.id,
+                'email': user.email,
+            }
+
+        except Exception as e:
+            status_code = status.HTTP_400_BAD_REQUEST
+            response = {
+                'success': False,
+                'status code': status.HTTP_400_BAD_REQUEST,
+                'message': 'User does not exists',
+                'error': str(e)
+            }
         return Response(response, status=status_code)
 
 
